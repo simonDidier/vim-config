@@ -1,0 +1,42 @@
+use Term::ReadKey;
+use Digest::SHA1 qw(sha1_hex);
+
+#-------------------------------------------------------------------------------
+# saisie cachée du mot de passe
+#-------------------------------------------------------------------------------
+sub saisie {
+    print "\nEnter your password: ";
+    ReadMode 'noecho';
+    my $pass = ReadLine 0;
+    chomp $pass;
+    ReadMode 'normal';
+    return $pass;
+}
+
+#-------------------------------------------------------------------------------
+#  initialisation mot de passe et enregistrement
+#-------------------------------------------------------------------------------
+Sub init {
+    open my $fh, '>', 'passwd.conf' or die $!;
+    my $passwd = saisie();
+    my $digest = sha1_hex($passwd);
+    print $fh $digest, "\n";
+    close $fh;
+}
+
+#-------------------------------------------------------------------------------
+#  utilisation du mot de passe
+#-------------------------------------------------------------------------------
+sub valid {
+    open my $fi, '<', 'passwd.conf' or die $!;
+    my $digest = <$fi>;
+    chomp $digest;
+    my $passwd = saisie();
+    $passwd = sha1_hex($passwd);
+    if ( $passwd eq $digest ) {
+        say "success";
+    }
+    else {
+        say "failure";
+    }
+}

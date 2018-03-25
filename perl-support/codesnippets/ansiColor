@@ -1,0 +1,5 @@
+use Term::ANSIColor qw(:constants);
+
+for my $color ("RED", "BLUE", "GREEN", "YELLOW", "MAGENTA", "WHITE", "BLACK", "CYAN"){
+say BOLD, REVERSE, UNDERLINE   eval $color, "hello", RESET;
+}

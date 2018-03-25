@@ -1,0 +1,9 @@
+   use Regexp::Common qw/ net number /;
+
+   # these become available:
+   # $RE{net}{IPv6}
+   # $RE{net}{IPv4}
+
+   if ( $ip =~ m/$RE{net}{IPv4}/ ){
+      print 'match!'
+   }
